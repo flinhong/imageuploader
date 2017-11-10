@@ -1,9 +1,7 @@
 // File Upload
 // 
-function ekUpload(){
+function fileUpload(){
   function Init() {
-
-    console.log("Upload Initialised");
 
     var fileSelect    = document.getElementById('file-upload'),
         fileDrag      = document.getElementById('file-drag'),
@@ -42,6 +40,7 @@ function ekUpload(){
       parseFile(f);
       uploadFile(f);
     }
+
   }
 
   // Output
@@ -53,9 +52,9 @@ function ekUpload(){
 
   function parseFile(file) {
 
-    console.log(file.name);
+    var size = Math.round(file.size/1000) + ' kb';
     output(
-      '<strong>' + encodeURI(file.name) + '</strong>'
+      '<strong>' + encodeURI(file.name) + '</strong><br><strong>' + size + '</strong>'
     );
     
     // var fileType = file.type;
@@ -97,39 +96,71 @@ function ekUpload(){
   }
 
   function uploadFile(file) {
-
+    console.log(file);
     var xhr = new XMLHttpRequest(),
-      fileInput = document.getElementById('class-roster-file'),
-      pBar = document.getElementById('file-progress'),
-      fileSizeLimit = 1024; // In MB
-    if (xhr.upload) {
-      // Check if file is less than x MB
-      if (file.size <= fileSizeLimit * 1024 * 1024) {
-        // Progress bar
-        pBar.style.display = 'inline';
-        xhr.upload.addEventListener('loadstart', setProgressMaxValue, false);
-        xhr.upload.addEventListener('progress', updateFileProgress, false);
+        fileInput = document.getElementById('class-roster-file'),
+        pBar = document.getElementById('file-progress'),
+        fileSizeLimit = 20; // In MB
+    // if (xhr.upload) {
+    //   // Check if file is less than x MB
+    //   if (file.size <= fileSizeLimit * 1024 * 1024) {
+    //     // Progress bar
+    //     pBar.style.display = 'inline';
+    //     xhr.upload.addEventListener('loadstart', setProgressMaxValue, false);
+    //     xhr.upload.addEventListener('progress', updateFileProgress, false);
 
-        // File received / failed
-        xhr.onreadystatechange = function(e) {
-          if (xhr.readyState == 4) {
-            // Everything is good!
+    //     // File received / failed
+    //     xhr.onreadystatechange = function(e) {
+    //       if (xhr.readyState == 4) {
+    //         // Everything is good!
 
-            // progress.className = (xhr.status == 200 ? "success" : "failure");
-            // document.location.reload(true);
-          }
-        };
+    //         // progress.className = (xhr.status == 200 ? "success" : "failure");
+    //         // document.location.reload(true);
+    //       }
+    //     };
 
-        // Start upload
-        xhr.open('POST', document.getElementById('file-upload-form').action, true);
-        xhr.setRequestHeader('X-File-Name', file.name);
-        xhr.setRequestHeader('X-File-Size', file.size);
-        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-        xhr.send(file);
-      } else {
-        output('Please upload a smaller file (< ' + fileSizeLimit + ' MB).');
-      }
+    //     // Start upload
+    //     xhr.open('POST', document.getElementById('file-upload-form').action, true);
+    //     xhr.setRequestHeader('X-File-Name', file.name);
+    //     xhr.setRequestHeader('X-File-Size', file.size);
+    //     xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    //     xhr.send(file);
+    //   } else {
+    //     output('Please upload a smaller file (< ' + fileSizeLimit + ' MB).');
+    //   }
+    // }
+
+    var ipfs = window.IpfsApi();
+    const Buffer = window.IpfsApi().Buffer;
+    let reader = new FileReader()
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result)
+      console.log(buffer)
+      ipfs.add(buffer, (err, result) => {
+        if (err || !result) {
+          // keep upload tab and display error message in it
+          console.log(`Unable to upload to IPFS API: ${err}`)
+        } else {
+          // close upload tab as it will be replaced with a new tab with uploaded content
+        }
+      })
     }
+    reader.readAsArrayBuffer(file)
+
+    if (file.size <= fileSizeLimit * 1024 * 1024) {
+      // ipfs.files.add(buf, function (err, result) {
+      //   // 'files' will be an array of objects
+      //   if(err) {
+      //     console.log(err)
+      //     return
+      //   }
+      //   var url = `https://ipfs.io/ipfs/${result[0].hash}`;
+      //   console.log(`Url --> ${url}`)
+      // })
+    } else {
+      output('Please upload a smaller file (< ' + fileSizeLimit + ' MB).');
+    }
+
   }
 
   // Check for the various File API support.
@@ -139,4 +170,4 @@ function ekUpload(){
     document.getElementById('file-drag').style.display = 'none';
   }
 }
-ekUpload();
+fileUpload();

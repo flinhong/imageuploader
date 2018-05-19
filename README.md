@@ -1,2 +1,2 @@
-# ipfs-web
-upload image or files to ipfs
+# image uploader
+upload image, self defined

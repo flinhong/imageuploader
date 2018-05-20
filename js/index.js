@@ -99,7 +99,7 @@ function ekUpload() {
   function file2Base64(file) {
     var fileInput = document.getElementById('class-roster-file'),
         pBar = document.getElementById('file-progress'),
-        fileSizeLimit = 5; // In MB
+        fileSizeLimit = 10; // In MB
 
     if (file.size <= fileSizeLimit * 1024 * 1024) {
       var reader = new FileReader();
@@ -142,6 +142,7 @@ function ekUpload() {
                       // document.location.reload(true);
                       var response = JSON.parse(xhr.responseText);
                       console.log(response);
+                      $('#output-info').text(response.secure_url);
                   }
               };
 

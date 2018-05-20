@@ -1,4 +1,4 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 html, body, * {
   box-sizing: border-box;
@@ -157,4 +157,12 @@ p {
   background: #454cad;
   border-color: #454cad;
   cursor: pointer;
+}
+#output-info {
+  padding: 0.5rem 0;
+  clear: both;
+}
+footer {
+  padding-top: 1rem;
+  clear: both;
 }

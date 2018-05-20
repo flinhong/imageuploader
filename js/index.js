@@ -117,7 +117,7 @@ function ekUpload() {
 
       // console.log(file);
       var xhr = new XMLHttpRequest(),
-          url = 'https://api.cloudinary.com/v1_1/flinhong/image/upload',
+          url = 'https://api.cloudinary.com/v1_1/flinhong/image/upload', // cloudinary API Base URL
           fileInput = document.getElementById('class-roster-file'),
           pBar = document.getElementById('file-progress'),
           fileSizeLimit = 5; // In MB
@@ -150,7 +150,7 @@ function ekUpload() {
               // xhr.setRequestHeader('X-File-Name', file.name);
               // xhr.setRequestHeader('X-File-Size', file.size);
 
-              fd.append('upload_preset', 'keybzqqw');
+              fd.append('upload_preset', 'keybzqqw'); // cloudinary unsigned upload preset
               fd.append('file', file)
               xhr.send(fd);
           } else {

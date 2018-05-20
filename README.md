@@ -1,2 +1,2 @@
 # image uploader
-upload image, self defined
+select or drag to upload an image to Cloudinary.

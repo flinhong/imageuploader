@@ -111,8 +111,6 @@ function ekUpload() {
     } else {
       output('Please select a smaller file (< ' + fileSizeLimit + ' MB).');
     }
-
-
   }
 
   function uploadFile(file) {
@@ -141,7 +139,7 @@ function ekUpload() {
                       progress.className = (xhr.status == 200 ? "success" : "failure");
                       // document.location.reload(true);
                       var response = JSON.parse(xhr.responseText);
-                      console.log(response);
+                      // console.log(response);
                       $('#output-info').text(response.secure_url);
                   }
               };

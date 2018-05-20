@@ -119,7 +119,7 @@ function ekUpload() {
 
       // console.log(file);
       var xhr = new XMLHttpRequest(),
-          url = 'https://api.cloudinary.com/v1_1/flinhong/image/upload?api_key=144259586877723'
+          url = 'https://api.cloudinary.com/v1_1/flinhong/image/upload',
           fileInput = document.getElementById('class-roster-file'),
           pBar = document.getElementById('file-progress'),
           fileSizeLimit = 5; // In MB
@@ -148,12 +148,11 @@ function ekUpload() {
               // Start upload
               xhr.open('POST', url, true);
               xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-              xhr.setRequestHeader('X-File-Name', file.name);
-              xhr.setRequestHeader('X-File-Size', file.size);
+              // xhr.setRequestHeader('X-File-Name', file.name);
+              // xhr.setRequestHeader('X-File-Size', file.size);
 
-              fd.append('upload_preset', 'statics');
+              fd.append('upload_preset', 'keybzqqw');
               fd.append('file', file)
-              console.log(fd);
               xhr.send(fd);
           } else {
               output('Please upload a smaller file (< ' + fileSizeLimit + ' MB).');
